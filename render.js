@@ -9,4 +9,22 @@ async function runPing() {
     dato.innerHTML = respuesta; 
 }
 
+
+//DB
+/*------------------------------------------------------------------------------*/
+async function displayProducts() {
+  const Products = await window.api.getProducts();
+  const userList = document.getElementById('products-list');
+
+  Products.forEach(Products => {
+    const li = document.createElement('li');
+    li.textContent = `${Products.id} ${Products.nombre} - ${Products.precio}`;
+    userList.appendChild(li);
+  });
+}
+
+// Call function on page load
+document.addEventListener('DOMContentLoaded', displayProducts);
+/*------------------------------------------------------------------------------*/
+
 runPing(); 
