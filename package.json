@@ -1,0 +1,17 @@
+{
+  "name": "sistempos",
+  "version": "1.0.0",
+  "description": "Copy of SistemPost",
+  "license": "ISC",
+  "author": "Justin Canteri",
+  "type": "commonjs",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+
+  },
+  "devDependencies": {
+    "electron": "^40.0.0"
+  }
+}
