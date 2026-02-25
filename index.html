@@ -3,11 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>SistemPos</title>
 </head>
 <body>
-    <h1 id="titulo">buenas tardes</h1>
-    <p id="products-list"></p>
+    <h1 id="titulo">SistemPos</h1>
+    <div id="contenedor">
+    <section id="botones">
+        <ul>
+            <li><!--get all-->
+                <button id="getAll">Obtener todos los datos</button>
+            </li>
+
+            <li><!--get whit id-->
+                <input type="number" id="inputID">
+                <button id="getWid">Obtener datos a partir de id</button>
+            </li>
+
+            <li><!--Update-->
+                <input type="number" id="UpdateId" value="id">
+                <input type="text" id="UpdateName" value="Name">
+                <input type="number" id="UpdatePrice" value="Price">
+                <button id="UpdateButton">Editar dato</button>
+            </li>
+
+            <li><!--Delete-->
+                <input type="number" id="inputFdelete">
+                <button id="deleteWid">Eliminar dato</button>
+            </li>
+
+            <il><!--Add-->
+                <input type="number">
+                <input type="text">
+                <input type="number">
+                <button>Add dato</button>
+            </li>
+        </ul>
+    </section>
+    <section id="pizarra ">
+        <p id="products-list"></p>
+    </section>
+    </div>
 </body>
 <script src="render.js"></script>
 </html>

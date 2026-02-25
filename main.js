@@ -18,18 +18,67 @@ const pool = new Pool({
     port: process.env.DB_PORT,
 });
 
-// Función optimizada
+
+//API`S
+/*-----------------------------------------------------------------------*/
+// Function for interact w db
+
+//getAll
 async function getProducts() {
     try {
         // El pool maneja el connect y el end internamente por cada consulta
         const result = await pool.query('SELECT * FROM sistempost'); 
-        // ¡OJO! Cambié 'sistempost' por 'productos' que es el nombre de la tabla que creamos
+        
         return result.rows;
     } catch (error) {
         console.error('Error en la base de datos:', error.message);
         return [];
     }
-}
+};
+
+
+//get W id
+async function getProductsID(id) {
+    try {
+        // Usamos $1 como marcador de posición y pasamos el id en un array
+        const result = await pool.query('SELECT * FROM sistempost WHERE id = $1', [Number(id)]); 
+        
+        return result.rows[0];
+    } catch (error) {
+        console.error('Error en la base de datos:', error.message);
+        throw error;
+    }
+};
+
+//delete
+async function DeleteProductsID(id) {
+    try {
+        const result = await pool.query('DELETE FROM sistempost WHERE id = $1', [Number(id)]); 
+        console.log(result.rowCount > 0);
+        //.rowCount avisa si la accion afectó a alguna fila, 1 si lo hizo, por ende si es >0 es porque alguna fila resultó borrada
+        return result.rowCount > 0;
+    } catch (error) {
+        console.error('Error en la base de datos:', error.message);
+        return false;
+    }
+};
+
+//Update
+async function updateProducts(id, name, price) {
+    try {
+        // Usamos $1 como marcador de posición y pasamos el id en un array
+        const result = await pool.query('UPDATE sistempost SET name = $1, price = $2 WHERE id = $3', [name, Number(price),Number(id)]); 
+        
+        return result.rowCount > 0;
+    } catch (error) {
+        console.error('Error al actualizar en BD:', error.message);
+        throw false;
+    }
+};
+/*-----------------------------------------------------------------------*/
+
+
+//Main
 /*-----------------------------------------------------------------------*/
 
 
@@ -61,8 +110,30 @@ ipcMain.handle('ping', () => 'pong');
 
 
 //DB
+
+
 // El canal IPC que se comunica con el renderer.js
+
+//conect getallProducts
 ipcMain.handle('get-Products', async (event) => {
   const products = await getProducts();
   return products;
 });
+
+//conect getProduct W id
+ipcMain.handle('get-Products-Whit-ID', async (event,id) => {
+  const products = await getProductsID(id);
+  return products;
+});
+
+//delete
+ipcMain.handle('delete-Products', async (event, id) =>{
+    const Delete = await DeleteProductsID(id);
+    return Delete;
+});
+
+//Update
+ipcMain.handle('update-Products', async (event, id, name, price) => {
+    const Update = await updateProducts(id, name, price);
+    return Update
+})
