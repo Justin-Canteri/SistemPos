@@ -28,7 +28,7 @@ async function getallProducts() {
 };
 
 //get product w id
-async function getProductsId(id) {
+async function getProductsIdRender(id) {
   const Products = await window.api.getProductsID(id);
   const userList = document.getElementById('products-list');
 
@@ -41,14 +41,14 @@ async function getProductsId(id) {
 };
 
 //delete
-async function DeleteProducts(id) {
+async function DeleteProductsRender(id) {
   
   const Delete = await window.api.DeleteProducts(id);
   
   if(Delete){
     const userList = document.getElementById('products-list');
     userList.innerHTML = '';
-    userList..textContent =`El producto fue eliminado con éxito`;
+    userList.textContent =`El producto fue eliminado con éxito`;
     
   } else {
     userList.textContent ='No se pudo eliminar el producto.';
@@ -56,7 +56,7 @@ async function DeleteProducts(id) {
 };
 
 //update
-async function UpdateProducts(id, name, price){
+async function UpdateProductsRender(id, name, price){
 
   if (!id || !name || !price) {
         alert("Por favor, completa todos los campos");
@@ -72,6 +72,30 @@ async function UpdateProducts(id, name, price){
     
   } else {
     userList.textContent= 'Error: No se encontró el producto o no se pudo actualizar.';
+  }
+}
+
+async function AddElementRender(id,name, price) {
+
+  const existingProducts = await window.api.getProductsID(id);
+
+  const userList = document.getElementById('products-list');
+
+  // Si el array tiene algo (length > 0), es porque el ID ya está ocupado
+  if (existingProducts) { 
+    userList.innerHTML = '';
+    userList.textContent = `El ID ${id} ya pertenece a un elemento.`;
+    return;
+}
+
+  const AddE = await window.api.AddElement(id, name, price);
+
+  if (AddE){
+    
+    userList.innerHTML = '';
+    userList.textContent = `El producto fue agregado con éxito`;
+  } else {
+    userList.textContent= 'Error al agregar producto.';
   }
 }
 /*------------------------------------------------------------------------------*/
@@ -103,6 +127,14 @@ const PriceUpdate = document.getElementById('UpdatePrice');
 
 //button Update
 const ButtonUpdate = document.getElementById('UpdateButton');
+
+//Add inputs
+const IdAdd = document.getElementById('AddId');
+const NameAdd = document.getElementById('AddName');
+const PriceAdd = document.getElementById('AddPrice');
+
+//button Add
+const buttonAdd = document.getElementById('AddButton');
 /*------------------------------------------------------------------------------*/
 
 //EVENTS
@@ -120,16 +152,20 @@ getAll.addEventListener('click', getallProducts);
 
 //get Porducts w id
 getWid.addEventListener('click', () => {
-    getProductsId(inputID.value);
+    getProductsIdRender(inputID.value);
 });
 
 //delete product
 deleteWid.addEventListener('click', () =>{
-  DeleteProducts(inputFdelete.value);
+  DeleteProductsRender(inputFdelete.value);
 });
 
 //Update Products
 ButtonUpdate.addEventListener('click', () =>{
-  UpdateProducts(IdUpdate.value, NameUpdate.value, PriceUpdate.value);
+  UpdateProductsRender(IdUpdate.value, NameUpdate.value, PriceUpdate.value);
 });
 
+//Add Element
+buttonAdd.addEventListener('click', () =>{
+  AddElementRender(IdAdd.value, NameAdd.value, PriceAdd.value);
+})

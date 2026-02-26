@@ -75,6 +75,19 @@ async function updateProducts(id, name, price) {
         throw false;
     }
 };
+
+//Add element
+async function AddElement(id, name, price) {
+    try {
+        // Usamos $1 como marcador de posición y pasamos el id en un array
+        const result = await pool.query('INSERT INTO sistempost (id, name, price) VALUES ($1, $2, $3)', [Number(id), name,Number(price)]); 
+        
+        return result.rowCount > 0;
+    } catch (error) {
+        console.error('Error al agregar elemento en BD:', error.message);
+        throw false;
+    }
+}
 /*-----------------------------------------------------------------------*/
 
 
@@ -135,5 +148,11 @@ ipcMain.handle('delete-Products', async (event, id) =>{
 //Update
 ipcMain.handle('update-Products', async (event, id, name, price) => {
     const Update = await updateProducts(id, name, price);
-    return Update
+    return Update;
+})
+
+//Add element
+ipcMain.handle('Add-Element', async(event, id, name, price) =>{
+    const AddE = await AddElement(id, name, price);
+    return AddE;
 })
