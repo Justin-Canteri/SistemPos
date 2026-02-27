@@ -1,6 +1,7 @@
 // main.js
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
+const { productSchema, idOnlySchema } = require('./product.validator');  //traigo product.validatos
 
 //DB
 /*-----------------------------------------------------------------------*/
@@ -135,24 +136,60 @@ ipcMain.handle('get-Products', async (event) => {
 
 //conect getProduct W id
 ipcMain.handle('get-Products-Whit-ID', async (event,id) => {
+
+  const { error } = idOnlySchema.validate({ id }); 
+
+    if (error) {
+        console.error("Validación fallida:", error.details[0].message);
+        // Devolvemos un objeto de error para que el Render sepa qué mostrar
+        return { success: false, message: error.details[0].message };
+    }
+    
   const products = await getProductsID(id);
   return products;
 });
 
 //delete
 ipcMain.handle('delete-Products', async (event, id) =>{
+
+    const { error } = idOnlySchema.validate({ id }); 
+
+    if (error) {
+        console.error("Validación fallida:", error.details[0].message);
+        // Devolvemos un objeto de error para que el Render sepa qué mostrar
+        return { success: false, message: error.details[0].message };
+    }
+
     const Delete = await DeleteProductsID(id);
     return Delete;
 });
 
 //Update
 ipcMain.handle('update-Products', async (event, id, name, price) => {
+
+    const { error } = productSchema.validate({ id, name, price }); 
+
+    if (error) {
+        console.error("Validación fallida:", error.details[0].message);
+        // Devolvemos un objeto de error para que el Render sepa qué mostrar
+        return { success: false, message: error.details[0].message };
+    }
+
     const Update = await updateProducts(id, name, price);
     return Update;
 })
 
 //Add element
 ipcMain.handle('Add-Element', async(event, id, name, price) =>{
+
+    const { error } = productSchema.validate({ id, name, price }); 
+
+    if (error) {
+        console.error("Validación fallida:", error.details[0].message);
+        // Devolvemos un objeto de error para que el Render sepa qué mostrar
+        return { success: false, message: error.details[0].message };
+    }
+    
     const AddE = await AddElement(id, name, price);
     return AddE;
 })

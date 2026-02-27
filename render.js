@@ -1,6 +1,7 @@
 // renderer.js (linked in your index.html)
 const dato = document.getElementById('titulo');
 
+
 //funcion pendiente a usar...
 async function runPing() {
     // We use window.api because that's what we defined in contextBridge
@@ -29,6 +30,7 @@ async function getallProducts() {
 
 //get product w id
 async function getProductsIdRender(id) {
+  
   const Products = await window.api.getProductsID(id);
   const userList = document.getElementById('products-list');
 
