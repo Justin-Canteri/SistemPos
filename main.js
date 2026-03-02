@@ -33,8 +33,12 @@ async function getProducts() {
 
         const result = await pool.query('SELECT * FROM sistempost'); 
         
-        // Log de éxito: registramos cuántos productos trajo (ayuda a debuggear)
-        logger.info(`Consulta exitosa. Se recuperaron ${result.rows.length} productos.`);
+        logger.info(`PRODUCTO MOSTRADO`, { 
+                audit: true,           // Esto hace que vaya al archivo de auditoría
+                action: 'DELETE',      // Qué hizo
+                target: 'sistempost',  // Sobre qué tabla 
+                date: new Date()
+            });
 
         return result.rows;
 
@@ -55,6 +59,14 @@ async function getProductsID(id) {
         if (result.rows.length === 0) {
                 logger.warn(`Producto no encontrado: El cliente buscó el ID ${id}`);
                 return null; 
+            } else{
+                logger.info(`PRODUCTO ENCONTRADO CON EXITO`, { 
+                audit: true,           // Esto hace que vaya al archivo de auditoría
+                action: 'DELETE',      // Qué hizo
+                target: 'sistempost',  // Sobre qué tabla
+                targetId: id,          // Qué registro
+                date: new Date()
+            });
             }
         
         return result.rows[0];
@@ -72,7 +84,14 @@ async function DeleteProductsID(id) {
 
         //logger exitoso
         if(result.rowCount > 0){
-            logger.info(`Consulta exitosa. Se Elimino el producto con el id: ${id}.`);
+            // REGISTRO DE AUDITORÍA
+            logger.info(`PRODUCTO ELIMINADO`, { 
+                audit: true,           // Esto hace que vaya al archivo de auditoría
+                action: 'DELETE',      // Qué hizo
+                target: 'sistempost',  // Sobre qué tabla
+                targetId: id,          // Qué registro
+                date: new Date()
+            });
         }
         //.rowCount avisa si la accion afectó a alguna fila, 1 si lo hizo, por ende si es >0 es porque alguna fila resultó borrada
         return result.rowCount > 0;
@@ -91,7 +110,13 @@ async function updateProducts(id, name, price) {
 
         //logger exitoso
         if(result.rowCount > 0){
-            logger.info(`Consulta exitosa. Se modifico el producto con el id: ${id}.`);
+            logger.info(`PRODUCTO MODIFICADO CON EXITO`, { 
+                audit: true,           // Esto hace que vaya al archivo de auditoría
+                action: 'DELETE',      // Qué hizo
+                target: 'sistempost',  // Sobre qué tabla
+                targetId: id,          // Qué registro
+                date: new Date()
+            });
         }
         
         return result.rowCount > 0;
@@ -110,7 +135,13 @@ async function AddElement(id, name, price) {
 
         //logger exitoso
         if(result.rowCount > 0){
-            logger.info(`Consulta exitosa. Se añadio el producto con el id: ${id}.`);
+            logger.info(`PRODUCTO AÑADIDIO CON EXITO`, { 
+                audit: true,           // Esto hace que vaya al archivo de auditoría
+                action: 'DELETE',      // Qué hizo
+                target: 'sistempost',  // Sobre qué tabla
+                targetId: id,          // Qué registro
+                date: new Date()
+            });
         }
         
         return result.rowCount > 0;

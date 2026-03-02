@@ -1,49 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>SistemPos</title>
+    <title>SistemPos | Admin</title>
 </head>
 <body>
-    <h1 id="titulo">SistemPos</h1>
-    <div id="contenedor">
-    <section id="botones">
-        <ul>
-            <li><!--get all-->
-                <button id="getAll">Obtener todos los datos</button>
-            </li>
+    <header>
+        <h1 id="titulo">SistemPos</h1>
+        <p class="subtitle">Panel de Control de Inventario</p>
+    </header>
 
-            <li><!--get whit id-->
-                <input type="number" id="inputID">
-                <button id="getWid">Obtener datos a partir de id</button>
-            </li>
+    <main id="contenedor">
+        <section id="botones">
+            <h3>Acciones</h3>
+            
+            <div class="card">
+                <button id="getAll" class="btn-primary">Obtener todos los datos</button>
+            </div>
 
-            <li><!--Update-->
-                <input type="number" id="UpdateId" value="id">
-                <input type="text" id="UpdateName" value="Name">
-                <input type="number" id="UpdatePrice" value="Price">
-                <button id="UpdateButton">Editar dato</button>
-            </li>
+            <div class="card">
+                <label>Buscar por ID</label>
+                <div class="group">
+                    <input type="number" id="inputID" placeholder="ID">
+                    <button id="getWid">Buscar</button>
+                </div>
+            </div>
 
-            <li><!--Delete-->
-                <input type="number" id="inputFdelete">
-                <button id="deleteWid">Eliminar dato</button>
-            </li>
+            <div class="card">
+                <label>Editar Producto</label>
+                <input type="number" id="UpdateId" placeholder="ID actual">
+                <input type="text" id="UpdateName" placeholder="Nuevo Nombre">
+                <input type="number" id="UpdatePrice" placeholder="Nuevo Precio">
+                <button id="UpdateButton" class="btn-edit">Actualizar Dato</button>
+            </div>
 
-            <il><!--Add-->
-                <input type="number" id="AddId">
-                <input type="text" id="AddName" value="Name">
-                <input type="number" id="AddPrice">
-                <button id="AddButton">Add dato</button>
-            </li>
-        </ul>
-    </section>
-    <section id="pizarra ">
-        <p id="products-list"></p>
-    </section>
-    </div>
+            <div class="card">
+                <label>Eliminar</label>
+                <div class="group">
+                    <input type="number" id="inputFdelete" placeholder="ID a borrar">
+                    <button id="deleteWid" class="btn-danger">Eliminar</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <label>Nuevo Producto</label>
+                <input type="number" id="AddId" placeholder="ID">
+                <input type="text" id="AddName" placeholder="Nombre">
+                <input type="number" id="AddPrice" placeholder="Precio">
+                <button id="AddButton" class="btn-add">Añadir Dato</button>
+            </div>
+        </section>
+
+        <section id="pizarra">
+            <h3>Vista de Productos</h3>
+            <div id="products-list" class="output-console">
+                <span class="placeholder">Esperando acción...</span>
+            </div>
+        </section>
+    </main>
+
+    <script src="render.js"></script>
 </body>
-<script src="render.js"></script>
 </html>

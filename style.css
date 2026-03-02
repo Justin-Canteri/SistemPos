@@ -1,10 +1,123 @@
-.contenedor {
-  display: flex;
-  gap: 20px;
+/* Configuración General */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f4f7f6; /* Gris muy clarito */
+    color: #333;
+    padding: 40px;
+    line-height: 1.6;
+}
+
+header {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+#titulo {
+    font-weight: 700;
+    letter-spacing: -1px;
+    color: #1a1a1a;
+}
+
+.subtitle {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Contenedor Principal */
+#contenedor {
+    display: flex;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 section {
-  flex: 1;  
-  padding: 20px;
-  border: 1px solid #000;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05); /* Sombra suave */
+    flex: 1;
 }
+
+h3 {
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 10px;
+}
+
+/* Tarjetas de Inputs */
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+}
+
+label {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #555;
+    text-transform: uppercase;
+}
+
+.group {
+    display: flex;
+    gap: 5px;
+}
+
+/* Estilo de Inputs */
+input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border 0.3s;
+}
+
+input:focus {
+    border-color: #007aff;
+}
+
+/* Botones */
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: opacity 0.2s, transform 0.1s;
+}
+
+button:active { transform: scale(0.98); }
+button:hover { opacity: 0.9; }
+
+#getAll { background: #007aff; color: white; width: 100%; }
+.btn-edit { background: #5856d6; color: white; }
+.btn-danger { background: #ff3b30; color: white; }
+.btn-add { background: #34c759; color: white; }
+#getWid { background: #8e8e93; color: white; }
+
+/* Pizarra / Output */
+.output-console {
+    background: #1e1e1e; /* Estilo terminal */
+    color: #00ff00;
+    padding: 20px;
+    border-radius: 8px;
+    min-height: 400px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.85rem;
+    overflow-y: auto;
+}
+
+.placeholder { color: #666; }
