@@ -28,8 +28,7 @@ const logger = winston.createLogger({
     new DailyRotateFile({
       filename: 'logs/audit/audit-%DATE%.log', // Carpeta distinta
       datePattern: 'YYYY-MM-DD',
-      maxFiles: '90d', // La auditoría se suele guardar más tiempo (3 meses)
-      // Filtro especial: solo guarda si el mensaje tiene la etiqueta "audit"
+      maxFiles: '90d',
       format: winston.format.combine(
         winston.format((info) => info.audit ? info : false)() //Si este log tiene la propiedad audit en true, déjalo pasar; si no, descártalo para este archivo específico".
       )

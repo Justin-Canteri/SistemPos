@@ -1,0 +1,86 @@
+🥩 SistemPos - Gestión de Carnicería (Learning Project)
+SistemPos es una aplicación de escritorio desarrollada con Electron y Node.js para el control de inventarios en una carnicería. Este proyecto fue diseñado con un enfoque educativo para dominar la arquitectura de procesos en Electron, la seguridad en la comunicación (IPC) y la persistencia de datos profesional con PostgreSQL.
+
+🧠 Arquitectura y Flujo de Datos
+Para entender este proyecto, es fundamental comprender cómo se comunican sus tres capas principales. Electron separa la interfaz del acceso al sistema por seguridad.
+
+Renderer Process (index.html & render.js): Es la cara visible. No tiene acceso a la base de datos por seguridad. Envía peticiones a través del "puente".
+
+Preload Script (preload.js): Es el túnel seguro. Expone funciones específicas al renderizador sin comprometer el sistema operativo.
+
+Main Process (main.js): Es el cerebro. Recibe las peticiones, las valida con Joi, realiza las consultas a Postgres y registra todo en los Logs.
+
+🛠️ Stack Tecnológico Explicado
+Runtime: Node.js (Motor de ejecución).
+
+Framework: Electron (Para convertir tecnologías web en una App de escritorio).
+
+Base de Datos: PostgreSQL (Robustez y relaciones de datos).
+
+Validación: Joi (Asegura que los datos sean correctos antes de tocar la DB).
+
+Logging: Winston (Sistema de bitácora para errores y auditoría).
+
+📂 Estructura de la Base de Datos
+He preparado un script SQL optimizado para una carnicería con 50 productos iniciales para que puedas probar el sistema de inmediato.
+
+Script de Creación y Migración
+SQL
+-- 1. Crear tabla
+CREATE TABLE sistempost (
+    id INTEGER PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL
+);
+
+-- 2. Carga de datos iniciales (50 Productos)
+INSERT INTO sistempost (id, name, price) VALUES
+(1, 'Asado de Tira', 8500), (2, 'Vacío', 9200), (3, 'Matambre', 7800),
+(4, 'Entraña', 11500), (5, 'Tapa de Asado', 7200), (6, 'Chorizo de Cerdo', 4200),
+(7, 'Chorizo Colorado', 5100), (8, 'Morcilla Común', 3500), (9, 'Morcilla Vasca', 4100),
+(10, 'Chinchulines', 3200), (11, 'Riñones', 3400), (12, 'Mollejas', 14500),
+(13, 'Lomo', 12800), (14, 'Bife de Chorizo', 10500), (15, 'Ojo de Bife', 11200),
+(16, 'Cuadril', 8900), (17, 'Peceto', 10800), (18, 'Nalga', 8600),
+(19, 'Bola de Lomo', 8200), (20, 'Cuadrada', 8100), (21, 'Tortuguita', 7500),
+(22, 'Palomita', 7600), (23, 'Paleta', 7400), (24, 'Roast Beef', 7200),
+(25, 'Azotillo', 6500), (26, 'Falda', 5200), (27, 'Ossobuco', 5800),
+(28, 'Milanesa de Ternera', 7500), (29, 'Milanesa de Pollo', 6200), (30, 'Pechuga de Pollo', 5800),
+(31, 'Pata y Muslo', 3200), (32, 'Alitas de Pollo', 2100), (33, 'Pollo Entero', 2800),
+(34, 'Carne Picada Común', 4500), (35, 'Carne Picada Especial', 6800), (36, 'Bondiola de Cerdo', 8900),
+(37, 'Pechito de Cerdo', 7800), (38, 'Carré de Cerdo', 7200), (39, 'Matambrito Cerdo', 11000),
+(40, 'Panceta Ahumada', 9500), (41, 'Lengua de Vaca', 6200), (42, 'Hígado', 2800),
+(43, 'Mondongo', 4500), (44, 'Rabo', 5100), (45, 'Grasa de Pella', 1500),
+(46, 'Hamburguesa Casera x4', 4800), (47, 'Brochette de Lomo', 3500), (48, 'Pamplona de Pollo', 4200),
+(49, 'Chicharrón', 2500), (50, 'Salchicha Parrillera', 4900);
+🚀 Instalación y Configuración
+Clonar el repositorio:
+
+Bash
+git clone https://github.com/Justin-Canteri/SistemPos
+Instalar dependencias:
+
+Bash
+npm install
+Configurar el entorno (.env):
+Crea un archivo .env con tus datos de Postgres:
+
+Fragmento de código
+DB_USER=postgres
+DB_HOST=localhost
+DB_DATABASE=sistempost
+DB_PASSWORD=...
+DB_PORT=5432
+Ejecutar la aplicación:
+
+Bash
+npm run start
+📑 Sistema de Auditoría (Logs)
+Una de las partes más importantes de este aprendizaje es el Audit Log. Winston registra automáticamente en archivos:
+
+combined.log: Flujo general de la aplicación.
+
+audit.log: Específicamente acciones críticas (Eliminar, Editar, Añadir).
+
+Ejemplo: Si borras el producto "Lomo", el sistema guarda la fecha, la acción y el ID afectado para referencia futura.
+
+Interfaz Principal: C:\Users\justi\Desktop\SistemPos\img\Interfaz Principal.png
